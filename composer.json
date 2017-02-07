@@ -1,0 +1,25 @@
+{
+    "name": "paylink/paylink",
+    "type": "library",
+    "description": "Paylink PHPLib",
+    "keywords": [
+        "payment",
+        "gateway"
+    ],
+    "license": "MIT",
+    "homepage": "https://www.pay-link.eu",
+    "authors": [
+        {
+            "name": "Concardis GmbH",
+            "homepage": "https://www.pay-link.eu"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Paylink": "lib/"
+        }
+    },
+    "require": {
+        "php": ">=5.4"
+    }
+}
