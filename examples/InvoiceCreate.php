@@ -51,7 +51,7 @@ $invoice->setSku($sku);
 
 // ISO code of currency, list of alternatives can be found here
 // http://developers.pay-link.eu/docs/miscellaneous
-$invoice->setCurrency('CHF');
+$invoice->setCurrency('EUR');
 
 // whether charge payment manually at a later date (type authorization)
 $invoice->setPreAuthorization(false);

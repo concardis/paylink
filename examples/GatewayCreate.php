@@ -30,7 +30,7 @@ $gateway->setVatRate(7.70);
 $gateway->setSku('P01122000');
 
 // currency ISO code
-$gateway->setCurrency('CHF');
+$gateway->setCurrency('EUR');
 
 //success and failed url in case that merchant redirects to payment site instead of using the modal view
 $gateway->setSuccessRedirectUrl('https://www.merchant-website.com/success');

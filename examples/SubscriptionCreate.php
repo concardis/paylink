@@ -23,7 +23,7 @@ $subscription->setUserId(1);
 $subscription->setPsp(4);
 $subscription->setPurpose('Test');
 $subscription->setAmount(100);
-$subscription->setCurrency('CHF');
+$subscription->setCurrency('EUR');
 $subscription->setPaymentInterval('P1M');
 $subscription->setPeriod('P1Y');
 $subscription->setCancellationInterval('P1M');

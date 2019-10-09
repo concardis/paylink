@@ -21,7 +21,7 @@ $paylink = new \Paylink\Paylink($instanceName, $secret);
 $subscription = new \Paylink\Models\Request\Subscription();
 $subscription->setId(6);
 $subscription->setAmount(40000);
-$subscription->setCurrency('CHF');
+$subscription->setCurrency('EUR');
 try {
     $response = $paylink->update($subscription);
     var_dump($response);
