@@ -1,8 +1,7 @@
 <?php
 /**
  * The Paylink Exception for any exception occurred during the API process
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
 namespace Paylink;

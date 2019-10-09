@@ -5,8 +5,8 @@ namespace Paylink\Models\Request;
 /**
  * Gateway request class
  *
- * @copyright   2017 Concardis GmbH
- * @author      Paylink Development Team <info@pay-link.eu>
+ * @copyright   Paylink AG
+ * @copyright   2019 Concardis GmbH
  * @package     \Paylink\Models\Request
  */
 class Gateway extends \Paylink\Models\Base
@@ -19,6 +19,22 @@ class Gateway extends \Paylink\Models\Base
      * @var     integer
      */
     protected $amount;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     float|null
+     */
+    protected $vatRate;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     string
+     */
+    protected $sku;
 
     /**
      * mandatory
@@ -34,7 +50,39 @@ class Gateway extends \Paylink\Models\Base
      * @access  protected
      * @var     array
      */
+    protected $purpose;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     array
+     */
     protected $psp;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     array
+     */
+    protected $pm;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     bool
+     */
+    protected $preAuthorization = false;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     bool
+     */
+    protected $reservation = false;
 
     /**
      * optional
@@ -76,6 +124,30 @@ class Gateway extends \Paylink\Models\Base
      */
     protected $failedRedirectUrl;
 
+    /**
+     * mandatory
+     *
+     * @access  protected
+     * @var     string
+     */
+    protected $cancelRedirectUrl;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     boolean
+     */
+    protected $skipResultPage;
+
+    /**
+     * optional
+     *
+     * @access  protected
+     * @var     boolean
+     */
+    protected $chargeOnAuthorization;
+
 
     /**
      * @access  public
@@ -96,6 +168,38 @@ class Gateway extends \Paylink\Models\Base
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @return float|null
+     */
+    public function getVatRate()
+    {
+        return $this->vatRate;
+    }
+
+    /**
+     * @param float|null $vatRate
+     */
+    public function setVatRate($vatRate)
+    {
+        $this->vatRate = $vatRate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * @param string $sku
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
     }
 
     /**
@@ -122,6 +226,27 @@ class Gateway extends \Paylink\Models\Base
      * @access  public
      * @return  array
      */
+    public function getPurpose()
+    {
+        return $this->purpose;
+    }
+
+    /**
+     * Set the purpose of this gateway. Will be displayed as transaction purpose in merchant backend.
+     * Use language ID as array key. Use key 0 as default purpose. Will be used for each activated frontend language.
+     *
+     * @access  public
+     * @param   array   $purpose
+     */
+    public function setPurpose($purpose)
+    {
+        $this->purpose = $purpose;
+    }
+
+    /**
+     * @access  public
+     * @return  array
+     */
     public function getPsp()
     {
         return $this->psp;
@@ -139,6 +264,66 @@ class Gateway extends \Paylink\Models\Base
     public function setPsp($psp)
     {
         $this->psp = $psp;
+    }
+
+    /**
+     * @access  public
+     * @return  array
+     */
+    public function getPm()
+    {
+        return $this->pm;
+    }
+
+    /**
+     * Set payment mean to use.
+     *
+     * @access  public
+     * @param   array   $pm
+     */
+    public function setPm($pm)
+    {
+        $this->pm = $pm;
+    }
+
+    /**
+     * @access  public
+     * @return  bool
+     */
+    public function getPreAuthorization()
+    {
+        return $this->preAuthorization;
+    }
+
+    /**
+     *  Whether charge payment manually at a later date (type authorization).
+     *
+     * @access  public
+     * @param   bool    $preAuthorization
+     */
+    public function setPreAuthorization($preAuthorization)
+    {
+        $this->preAuthorization = $preAuthorization;
+    }
+
+    /**
+     * @access  public
+     * @return  bool
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     *  Whether charge payment manually at a later date (type reservation).
+     *
+     * @access  public
+     * @param   bool    $reservation
+     */
+    public function setReservation($reservation)
+    {
+        $this->reservation = $reservation;
     }
 
     /**
@@ -249,6 +434,57 @@ class Gateway extends \Paylink\Models\Base
     public function setFailedRedirectUrl($failedRedirectUrl)
     {
         $this->failedRedirectUrl = $failedRedirectUrl;
+    }
+
+    /**
+     * @access  public
+     * @return  string
+     */
+    public function getCancelRedirectUrl()
+    {
+        return $this->cancelRedirectUrl;
+    }
+
+    /**
+     * Set the url to redirect to after cancelled payment.
+     *
+     * @param   string  $cancelRedirectUrl
+     */
+    public function setCancelRedirectUrl($cancelRedirectUrl)
+    {
+        $this->cancelRedirectUrl = $cancelRedirectUrl;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSkipResultPage()
+    {
+        return $this->skipResultPage;
+    }
+
+    /**
+     * @param bool $skipResultPage
+     */
+    public function setSkipResultPage($skipResultPage)
+    {
+        $this->skipResultPage = $skipResultPage;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isChargeOnAuthorization()
+    {
+        return $this->chargeOnAuthorization;
+    }
+
+    /**
+     * @param bool $chargeOnAuthorization
+     */
+    public function setChargeOnAuthorization($chargeOnAuthorization)
+    {
+        $this->chargeOnAuthorization = $chargeOnAuthorization;
     }
 
     /**

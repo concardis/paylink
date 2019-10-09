@@ -1,10 +1,10 @@
 <?php
 /**
  * The invoice response model
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
+
 namespace Paylink\Models\Response;
 
 /**
@@ -13,10 +13,20 @@ namespace Paylink\Models\Response;
  */
 class Invoice extends \Paylink\Models\Request\Invoice
 {
+    /** @var string $hash */
     protected $hash = '';
+
+    /** @var string $link */
     protected $link = '';
-    protected $status;
+
+    /** @var string $status */
+    protected $status = '';
+
+    /** @var int $createdAt */
     protected $createdAt = 0;
+
+    /** @var array $invoices */
+    protected $invoices = [];
 
     /**
      * @return string
@@ -88,5 +98,21 @@ class Invoice extends \Paylink\Models\Request\Invoice
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return array
+     */
+    public function getInvoices()
+    {
+        return $this->invoices;
+    }
+
+    /**
+     * @param array $invoices
+     */
+    public function setInvoices($invoices)
+    {
+        $this->invoices = $invoices;
     }
 }

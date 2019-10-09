@@ -1,8 +1,7 @@
 <?php
 /**
  * The subscription response model
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
 namespace Paylink\Models\Response;

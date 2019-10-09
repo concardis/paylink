@@ -1,8 +1,7 @@
 <?php
 /**
  * The invoice request model
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
 namespace Paylink\Models\Request;
@@ -28,7 +27,11 @@ class Invoice extends \Paylink\Models\Base
     protected $name = '';
     protected $purpose = '';
     protected $amount = 0;
+    protected $vatRate = null;
+    protected $sku = '';
     protected $currency = '';
+    protected $preAuthorization = false;
+    protected $reservation = false;
 
     protected $successRedirectUrl;
     protected $failedRedirectUrl;
@@ -175,6 +178,38 @@ class Invoice extends \Paylink\Models\Base
     }
 
     /**
+     * @return float|null
+     */
+    public function getVatRate()
+    {
+        return $this->vatRate;
+    }
+
+    /**
+     * @param float|null $vatRate
+     */
+    public function setVatRate($vatRate)
+    {
+        $this->vatRate = $vatRate;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    /**
+     * @param string $sku
+     */
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    }
+
+    /**
      * @return string
      */
     public function getCurrency()
@@ -192,6 +227,48 @@ class Invoice extends \Paylink\Models\Base
     public function setCurrency($currency)
     {
         $this->currency = $currency;
+    }
+
+    /**
+     * @access  public
+     * @return  bool
+     */
+    public function getPreAuthorization()
+    {
+        return $this->preAuthorization;
+    }
+
+    /**
+     *  Whether charge payment manually at a later date (type authorization).
+     *  Note: Subscription and authorization can not be combined.
+     *
+     * @access  public
+     * @param   bool    $preAuthorization
+     */
+    public function setPreAuthorization($preAuthorization)
+    {
+        $this->preAuthorization = $preAuthorization;
+    }
+
+    /**
+     * @access  public
+     * @return  bool
+     */
+    public function getReservation()
+    {
+        return $this->reservation;
+    }
+
+    /**
+     *  Whether charge payment manually at a later date (type reservation).
+     *  Note: Subscription and reservation can not be combined.
+     *
+     * @access  public
+     * @param   bool    $reservation
+     */
+    public function setReservation($reservation)
+    {
+        $this->reservation = $reservation;
     }
 
     /**
@@ -242,6 +319,7 @@ class Invoice extends \Paylink\Models\Base
      * Set whether the payment should be a recurring payment (subscription)
      * If you set to TRUE, you should provide a
      * subscription interval, period and cancellation interval
+     * Note: Subscription and pre-authorization can not be combined.
      *
      * @param boolean $subscriptionState
      */

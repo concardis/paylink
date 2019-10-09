@@ -40,12 +40,28 @@ $invoice->setPurpose('Shop Order #001');
 $amount = 5.90;
 // don't forget to multiply by 100
 $invoice->setAmount($amount * 100);
+
+// VAT rate percentage (nullable)
+$vatRate = 7.70;
+$invoice->setVatRate($vatRate);
+
+// Product SKU
+$sku = 'P01122000';
+$invoice->setSku($sku);
+
 // ISO code of currency, list of alternatives can be found here
 // http://developers.pay-link.eu/docs/miscellaneous
 $invoice->setCurrency('CHF');
 
+// whether charge payment manually at a later date (type authorization)
+$invoice->setPreAuthorization(false);
+
+// whether charge payment manually at a later date (type reservation)
+$invoice->setReservation(false);
+
 // subscription information if you want the customer to authorize a recurring payment
-// NOTE: This functionality is currently only available by using PAYMILL as a payment service provider
+// NOTE: This functionality is currently only available by using PAYMILL as a payment service provider.
+// This also does not work in combination with pre-authorization payments.
 //$invoice->setSubscriptionState(true);
 //$invoice->setSubscriptionInterval('P1M');
 //$invoice->setSubscriptionPeriod('P1Y');
@@ -53,13 +69,14 @@ $invoice->setCurrency('CHF');
 
 // add contact information fields which should be filled by customer
 // it would be great to provide at least an email address field
-$invoice->addField($type = 'email', $mandatory = true, $defaultValue = 'my-customer@example.com');
-$invoice->addField($type = 'company', $mandatory = true, $defaultValue = 'Ueli Kramer Firma');
-$invoice->addField($type = 'forename', $mandatory = true, $defaultValue = 'Ueli');
-$invoice->addField($type = 'surname', $mandatory = true, $defaultValue = 'Kramer');
+$invoice->addField($type = 'email', $mandatory = true, $defaultValue = 'max.muster@pay-link.eu');
+$invoice->addField($type = 'company', $mandatory = true, $defaultValue = 'Max Musterfirma');
+$invoice->addField($type = 'forename', $mandatory = true, $defaultValue = 'Max');
+$invoice->addField($type = 'surname', $mandatory = true, $defaultValue = 'Mustermann');
 $invoice->addField($type = 'country', $mandatory = true, $defaultValue = 'AT');
-$invoice->addField($type = 'title', $mandatory = true, $defaultValue = 'miss');
+$invoice->addField($type = 'title', $mandatory = true, $defaultValue = 'mister');
 $invoice->addField($type = 'terms', $mandatory = true);
+$invoice->addField($type = 'privacy_policy', $mandatory = true);
 $invoice->addField($type = 'custom_field_1', $mandatory = true, $defaultValue = 'Value 001', $name = 'Das ist ein Feld');
 
 // fire request with created and filled link request-object.

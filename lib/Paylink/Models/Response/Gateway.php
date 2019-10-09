@@ -5,41 +5,29 @@ namespace Paylink\Models\Response;
 /**
  * Gateway response class
  *
- * @copyright   2017 Concardis GmbH
- * @author      Paylink Development Team <info@pay-link.eu>
+ * @copyright   2019 Concardis GmbH
  * @package     \Paylink\Models\Response
  */
 class Gateway extends \Paylink\Models\Request\Gateway
 {
-
-    /**
-     * @access  protected
-     * @var     string
-     */
+    /** @var string */
     protected $hash;
 
-    /**
-     * @access  protected
-     * @var     string
-     */
+    /** @var string */
     protected $link;
 
-    /**
-     * @access  protected
-     * @var     string
-     */
+    /** @var string */
     protected $status;
 
-    /**
-     * @access  protected
-     * @var     integer
-     */
+    /** @var integer */
     protected $createdAt;
 
+    /** @var array $invoices */
+    protected $invoices;
+
 
     /**
-     * @access  public
-     * @return  string
+     * @return string
      */
     public function getHash()
     {
@@ -47,8 +35,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @param   string  $hash
+     * @param string $hash
      */
     public function setHash($hash)
     {
@@ -56,8 +43,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @return  string
+     * @return string
      */
     public function getLink()
     {
@@ -65,8 +51,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @param   string  $link
+     * @param string $link
      */
     public function setLink($link)
     {
@@ -74,8 +59,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @return  string
+     * @return string
      */
     public function getStatus()
     {
@@ -83,8 +67,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @param   string  $status
+     * @param string $status
      */
     public function setStatus($status)
     {
@@ -92,8 +75,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @return  integer
+     * @return integer
      */
     public function getCreatedAt()
     {
@@ -101,8 +83,7 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @param   integer $createdAt
+     * @param integer $createdAt
      */
     public function setCreatedAt($createdAt)
     {
@@ -110,12 +91,26 @@ class Gateway extends \Paylink\Models\Request\Gateway
     }
 
     /**
-     * @access  public
-     * @param   array   $fields
+     * @param array $fields
      */
     public function setFields($fields)
     {
         $this->fields = $fields;
     }
 
+    /**
+     * @return array
+     */
+    public function getInvoices()
+    {
+        return $this->invoices;
+    }
+
+    /**
+     * @param array $invoices
+     */
+    public function setInvoices($invoices)
+    {
+        $this->invoices = $invoices;
+    }
 }

@@ -1,11 +1,12 @@
 <?php
 /**
  * The Paylink client API basic class file
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
 namespace Paylink;
+
+use Paylink\Communicator;
 
 /**
  * All interactions with the API can be done with an instance of this class.
@@ -26,13 +27,14 @@ class Paylink
      * @param string $communicationHandler The preferred communication handler.
      *                                     If nothing is defined the Paylink API will use the cURL communicator.
      */
-    public function __construct($instance, $apiSecret, $communicationHandler = null)
+    public function __construct($instance, $apiSecret, $communicationHandler = '', $apiBaseDomain = Communicator::API_URL_BASE_DOMAIN)
     {
-        if ($communicationHandler) {
-            $this->communicator = new \Paylink\Communicator($instance, $apiSecret, $communicationHandler);
-        } else {
-            $this->communicator = new \Paylink\Communicator($instance, $apiSecret);
-        }
+        $this->communicator = new Communicator(
+            $instance,
+            $apiSecret,
+            $communicationHandler ?: Communicator::DEFAULT_COMMUNICATION_HANDLER,
+            $apiBaseDomain
+        );
     }
 
     /**

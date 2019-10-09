@@ -1,8 +1,7 @@
 <?php
 /**
  * This class has the definition of the API used for the communication.
- * @author    Ueli Kramer
- * @copyright 2017 Concardis GmbH
+ * @copyright 2019 Concardis GmbH
  * @since     v1.0
  */
 namespace Paylink;
@@ -14,12 +13,16 @@ namespace Paylink;
 class Communicator
 {
     const VERSION = 'v1';
-    const API_URL = 'https://api.pay-link.eu/%s/%s/%d/';
+    const API_URL_FORMAT = 'https://api.%s/%s/%s/%d/';
+    const API_URL_BASE_DOMAIN = 'pay-link.eu';
+    const DEFAULT_COMMUNICATION_HANDLER = '\Paylink\CommunicationAdapter\CurlCommunication';
+
     /**
      * @var array A set of methods which can be used to communicate with the API server.
      */
     protected static $methods = array(
         'create' => 'POST',
+        'charge' => 'POST',
         'cancel' => 'DELETE',
         'delete' => 'DELETE',
         'update' => 'PUT',
@@ -35,6 +38,10 @@ class Communicator
      */
     protected $apiSecret;
     /**
+     * @var string The base domain of the API URL.
+     */
+    protected $apiBaseDomain;
+    /**
      * @var string The communication handler which handles the HTTP requests. Default cURL Communication handler
      */
     protected $communicationHandler;
@@ -43,19 +50,20 @@ class Communicator
      * Generates a communicator object with a communication handler like cURL.
      *
      * @param string $instance             The instance name, needed for the generation of the API url.
-     * @param string $apiSecret            The API secret which is the key to hash all the parameters passed to the API
-     *                                     server.
+     * @param string $apiSecret            The API secret which is the key to hash all the parameters passed to the API server.
      * @param string $communicationHandler The preferred communication handler. Default is cURL.
+     * @param string $apiBaseDomain        The base domain of the API URL.
      *
-     * @throws \Paylink\PaylinkException
+     * @throws PaylinkException
      */
-    public function __construct($instance, $apiSecret, $communicationHandler = '\Paylink\CommunicationAdapter\CurlCommunication')
+    public function __construct($instance, $apiSecret, $communicationHandler, $apiBaseDomain)
     {
         $this->instance = $instance;
         $this->apiSecret = $apiSecret;
+        $this->apiBaseDomain = $apiBaseDomain;
 
         if (!class_exists($communicationHandler)) {
-            throw new \Paylink\PaylinkException('Communication handler class ' . $communicationHandler . ' not found');
+            throw new PaylinkException('Communication handler class ' . $communicationHandler . ' not found');
         }
         $this->communicationHandler = new $communicationHandler();
     }
@@ -86,10 +94,12 @@ class Communicator
         $params['ApiSignature'] =
             base64_encode(hash_hmac('sha256', http_build_query($params, null, '&'), $this->apiSecret, true));
         $params['instance'] = $this->instance;
-        
+
         $id = isset($params['id']) ? $params['id'] : 0;
+        $apiUrl = sprintf(self::API_URL_FORMAT, $this->apiBaseDomain, self::VERSION, $params['model'], $id);
+
         $response = $this->communicationHandler->requestApi(
-            sprintf(self::API_URL, self::VERSION, $params['model'], $id),
+            $apiUrl,
             $params,
             $this->getHttpMethod($method)
         );

@@ -4,7 +4,7 @@ paylink-php
 VERSIONING
 ----------
 
-This client API library uses the API version 1.0.0 of Paylink. If you got troubles, make sure you are using the correct library version!
+This client API library uses the Paylink API. If you got troubles, make sure you are using the correct library version!
 
 Requirements
 ------------
@@ -29,12 +29,12 @@ For the latest library version you can use the following content of composer.jso
 ```
 
 
-For the Version 1.0.0 you can use the following content of composer.json:
+For the Version 2.0.0 you can use the following content of composer.json:
 
 ```json
 {
     "require": {
-        "paylink/paylink": "1.0.0"
+        "paylink/paylink": "2.0.0"
     }
 }
 ```

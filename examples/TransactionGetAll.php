@@ -18,19 +18,10 @@ $secret = 'YOUR_SECRET';
 
 $paylink = new \Paylink\Paylink($instanceName, $secret);
 
-$page = new \Paylink\Models\Request\Page();
-$page->setTitle('Form title');
-$page->setDescription('Form description');
-$page->setPsp(1);
-
-// optional: whether charge payment manually at a later date (type authorization)
-$page->setPreAuthorization(false);
-
-// optional: whether charge payment manually at a later date (type reservation)
-$page->setReservation(false);
+$transaction = new \Paylink\Models\Request\Transaction();
 
 try {
-    $response = $paylink->create($page);
+    $response = $paylink->getAll($transaction);
     var_dump($response);
 } catch (\Paylink\PaylinkException $e) {
     print $e->getMessage();
